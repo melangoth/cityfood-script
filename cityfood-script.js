@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CityFood Script
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @description  Modifies CityFood page content.
 // @author       You
 // @match        https://rendel.cityfood.hu/
@@ -15,6 +15,8 @@
     'use strict';
     
     function hideUnwantedElementsAndCollectFood() {
+console.log('Collecting nuts...');
+        
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const collectedFoods = [];
     const nutrientRegex = /(\d+)\D*(\d+)\D*(\d+)\D*(\d+)/; // Regex to match four numeric values
