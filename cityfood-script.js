@@ -1,4 +1,20 @@
-function hideUnwantedElementsAndCollectFood() {
+// ==UserScript==
+// @name         CityFood Script
+// @namespace    http://tampermonkey.net/
+// @version      1.0.0
+// @description  Modifies CityFood page content.
+// @author       You
+// @match        https://rendel.cityfood.hu/
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=cityfood.hu
+// @grant        none
+// @updateURL    https://raw.githubusercontent.com/melangoth/cityfood-script/master/cityfood-script.js
+// @downloadURL  https://raw.githubusercontent.com/melangoth/cityfood-script/master/cityfood-script.js
+// ==/UserScript==
+
+(function() {
+    'use strict';
+    
+    function hideUnwantedElementsAndCollectFood() {
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const collectedFoods = [];
     const nutrientRegex = /(\d+)\D*(\d+)\D*(\d+)\D*(\d+)/; // Regex to match four numeric values
@@ -158,3 +174,5 @@ function hideUnwantedElementsAndCollectFood() {
 // Directly invoke the function
 const foodData = hideUnwantedElementsAndCollectFood();
 console.log(foodData); // Log the array of food objects to the console
+
+    })();
