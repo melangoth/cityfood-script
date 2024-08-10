@@ -33,7 +33,7 @@ function hideUnwantedElementsAndCollectFood() {
                     const day = daysOfWeek[index % 7]; // Assuming the index corresponds to the day
                     const nutsDiv = foodContainer.querySelector('.food-top-details');
                     const nuts = nutsDiv ? nutsDiv.innerText || nutsDiv.textContent : '';
-                    
+
                     // Extract numeric values from nuts using regex
                     const match = nuts.match(nutrientRegex);
                     const [ , kcal = '', szh = '', fh = '', zs = '' ] = match || [];
@@ -56,7 +56,39 @@ function hideUnwantedElementsAndCollectFood() {
         }
     });
 
-    // Return the collected food objects
+    // Group by day and rank food items
+    const groupedByDay = collectedFoods.reduce((acc, food) => {
+        if (!acc[food.day]) {
+            acc[food.day] = [];
+        }
+        acc[food.day].push(food);
+        return acc;
+    }, {});
+
+    Object.keys(groupedByDay).forEach(day => {
+        const foods = groupedByDay[day];
+        
+        // Rank food items based on their nutrient values
+        foods.sort((a, b) => {
+            // Custom sorting function: higher values are ranked higher
+            return (b.nuts.kcal - a.nuts.kcal) ||
+                   (b.nuts.szh - a.nuts.szh) ||
+                   (b.nuts.fh - a.nuts.fh) ||
+                   (b.nuts.zs - a.nuts.zs);
+        });
+
+        foods.forEach((food, index) => {
+            // Rank is 1-based index
+            food.ranks = {
+                kcal: index + 1,
+                szh: index + 1,
+                fh: index + 1,
+                zs: index + 1
+            };
+        });
+    });
+
+    // Return the collected and ranked food objects
     return collectedFoods;
 }
 
