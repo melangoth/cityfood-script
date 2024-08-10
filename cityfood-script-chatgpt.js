@@ -1,4 +1,4 @@
-function hideUnwantedDivs() {
+function hideUnwantedDivsAndModifyText() {
     // Hide all divs with the class 'banner'
     const banners = document.querySelectorAll('div.banner');
     banners.forEach(banner => {
@@ -12,10 +12,16 @@ function hideUnwantedDivs() {
         // Find the category-name div within the container
         const categoryNameDiv = container.querySelector('.category-name');
 
-        // If the category-name div exists and does not contain 'Főétel' or 'City-Fitt', hide the container
         if (categoryNameDiv) {
-            const categoryText = categoryNameDiv.innerText || categoryNameDiv.textContent;
-            if (!categoryText.includes('Főétel') && !categoryText.includes('City-Fitt')) {
+            let categoryText = categoryNameDiv.innerText || categoryNameDiv.textContent;
+            
+            // Replace 'Főétel' with 'Főételek'
+            if (categoryText.includes('Főétel')) {
+                categoryNameDiv.innerText = categoryText.replace('Főétel', 'Főételek');
+            }
+            
+            // If the category-name does not contain 'Főételek' or 'City-Fitt', hide the container
+            if (!categoryText.includes('Főételek') && !categoryText.includes('City-Fitt')) {
                 container.style.display = 'none';
             }
         }
@@ -23,4 +29,4 @@ function hideUnwantedDivs() {
 }
 
 // Run the function after the content is loaded
-window.addEventListener('load', hideUnwantedDivs);
+window.addEventListener('load', hideUnwantedDivsAndModifyText);
