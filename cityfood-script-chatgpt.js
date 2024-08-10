@@ -71,25 +71,20 @@ function hideUnwantedElementsAndCollectFood() {
     Object.keys(groupedByDay).forEach(day => {
         const foods = groupedByDay[day];
 
-        // Rank foods by each nutrient property
-        const rankings = {
-            kcal: [],
-            szh: [],
-            fh: [],
-            zs: []
-        };
-
+        // Initialize ranks for each food
         foods.forEach(food => {
-            rankings.kcal.push(food);
-            rankings.szh.push(food);
-            rankings.fh.push(food);
-            rankings.zs.push(food);
+            food.ranks = {
+                kcal: null,
+                szh: null,
+                fh: null,
+                zs: null
+            };
         });
 
         // Function to rank a list of foods based on a property
         const rankByProperty = (property) => {
-            rankings[property].sort((a, b) => b.nuts[property] - a.nuts[property]);
-            rankings[property].forEach((food, index) => {
+            foods.sort((a, b) => b.nuts[property] - a.nuts[property]);
+            foods.forEach((food, index) => {
                 food.ranks[property] = index + 1;
             });
         };
@@ -100,14 +95,6 @@ function hideUnwantedElementsAndCollectFood() {
         rankByProperty('zs');
 
         foods.forEach(food => {
-            // Make sure to include rank properties for each nutrient
-            food.ranks = {
-                kcal: food.ranks.kcal || Infinity,
-                szh: food.ranks.szh || Infinity,
-                fh: food.ranks.fh || Infinity,
-                zs: food.ranks.zs || Infinity
-            };
-
             // Update the details text with ranks
             const detailsText = food.details.innerText || food.details.textContent;
             food.details.innerHTML = detailsText.replace(rankRegex, (match) => {
