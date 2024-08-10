@@ -103,16 +103,16 @@ function hideUnwantedElementsAndCollectFood() {
                     let rank = '';
                     
                     if (numericValue === food.nuts.kcal) {
-                        rank = ` (${food.ranks.kcal})`;
+                        rank = `(${food.ranks.kcal}) `;
                     } else if (numericValue === food.nuts.szh) {
-                        rank = ` (${food.ranks.szh})`;
+                        rank = `(${food.ranks.szh}) `;
                     } else if (numericValue === food.nuts.fh) {
-                        rank = ` (${food.ranks.fh})`;
+                        rank = `(${food.ranks.fh}) `;
                     } else if (numericValue === food.nuts.zs) {
-                        rank = ` (${food.ranks.zs})`;
+                        rank = `(${food.ranks.zs}) `;
                     }
                     
-                    return `${match}${rank}`;
+                    return `${rank}${match}`;
                 });
             }
         });
