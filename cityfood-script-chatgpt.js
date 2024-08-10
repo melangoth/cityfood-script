@@ -82,17 +82,18 @@ function hideUnwantedElementsAndCollectFood() {
         });
 
         // Function to rank a list of foods based on a property
-        const rankByProperty = (property) => {
-            foods.sort((a, b) => b.nuts[property] - a.nuts[property]);
+        const rankByProperty = (property, isAscending) => {
+            foods.sort((a, b) => isAscending ? a.nuts[property] - b.nuts[property] : b.nuts[property] - a.nuts[property]);
             foods.forEach((food, index) => {
                 food.ranks[property] = index + 1;
             });
         };
 
-        rankByProperty('kcal');
-        rankByProperty('szh');
-        rankByProperty('fh');
-        rankByProperty('zs');
+        // Rank properties according to their specific criteria
+        rankByProperty('kcal', true); // Lower kcal is better
+        rankByProperty('szh', true);  // Lower szh is better
+        rankByProperty('fh', false);  // Higher fh is better
+        rankByProperty('zs', true);   // Lower zs is better
 
         foods.forEach(food => {
             if (food.details) {
