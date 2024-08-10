@@ -122,8 +122,6 @@ function hideUnwantedElementsAndCollectFood() {
     return collectedFoods;
 }
 
-// Run the function after the content is loaded and log the collected food objects
-window.addEventListener('load', () => {
-    const foodData = hideUnwantedElementsAndCollectFood();
-    console.log(foodData); // Log the array of food objects to the console
-});
+// Directly invoke the function
+const foodData = hideUnwantedElementsAndCollectFood();
+console.log(foodData); // Log the array of food objects to the console
