@@ -120,7 +120,7 @@ function hideUnwantedElementsAndCollectFood() {
                     }
                     
                     const rankNumber = parseInt(rank.match(/\d+/)[0], 10); // Extract rank number
-                    const formattedRank = rankNumber <= 3 ? `<b>${rank}</b>` : rank; // Bold top 3 ranks
+                    const formattedRank = isBold ? (rankNumber <= 3 ? `<b>${rank}</b>` : rank) : rank; // Bold only szh and fh
                     const styledRank = color ? `<span style="color: ${color};">${formattedRank}</span>` : formattedRank; // Apply color
 
                     return `${styledRank}${match}`;
