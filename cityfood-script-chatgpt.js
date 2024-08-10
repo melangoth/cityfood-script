@@ -11,7 +11,10 @@ function hideUnwantedCategories() {
             const categoryText = categoryNameDiv.innerText || categoryNameDiv.textContent;
 
             // Hide the entire category div if it does not contain 'City-Fitt' or 'Főételek'
-            if (!categoryText.includes('City-Fitt') && !categoryText.includes('Főételek')) {
+            // or if it contains 'kis-adag'
+            if (!categoryText.includes('City-Fitt') &&
+                !categoryText.includes('Főételek') ||
+                categoryText.includes('kis-adag')) {
                 categoryDiv.style.display = 'none';
             }
         } else {
