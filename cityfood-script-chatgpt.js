@@ -1,7 +1,7 @@
 function hideUnwantedElementsAndCollectFood() {
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const collectedFoods = [];
-    const nutrientRegex = /(\d+)\s*kcal\s*(\d+)\s*szh\s*(\d+)\s*fh\s*(\d+)\s*zs/i;
+    const nutrientRegex = /(\d+)\D*(\d+)\D*(\d+)\D*(\d+)/; // Regex to match four numeric values
 
     // Hide all divs with the class 'banner'
     const banners = document.querySelectorAll('div.banner');
