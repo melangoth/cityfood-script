@@ -27,7 +27,7 @@ function hideUnwantedElementsAndCollectFood() {
                 categoryDiv.style.display = 'none';
             } else {
                 // If the category div is not hidden, collect food containers
-                const foodContainers = categoryDiv.querySelectorAll('.food-container');
+                const foodContainers = categoryDiv.querySelectorAll('.food');
                 foodContainers.forEach((foodContainer, index) => {
                     const day = daysOfWeek[index % 7]; // Assuming the index corresponds to the day
                     const nutsDiv = foodContainer.querySelector('.food-top-details');
