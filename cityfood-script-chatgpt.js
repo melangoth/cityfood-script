@@ -96,7 +96,7 @@ function hideUnwantedElementsAndCollectFood() {
 
         foods.forEach(food => {
             if (food.details) {
-                // Update the details text with ranks
+                // Update the details text with ranks, formatting top 3 as bold
                 const detailsText = food.details.innerText || food.details.textContent;
                 food.details.innerHTML = detailsText.replace(rankRegex, (match) => {
                     const numericValue = parseInt(match, 10);
@@ -112,7 +112,10 @@ function hideUnwantedElementsAndCollectFood() {
                         rank = `(${food.ranks.zs}) `;
                     }
                     
-                    return `${rank}${match}`;
+                    const rankNumber = parseInt(rank.match(/\d+/)[0], 10); // Extract rank number
+                    const formattedRank = rankNumber <= 3 ? `<b>${rank}</b>` : rank; // Bold top 3 ranks
+                    
+                    return `${formattedRank}${match}`;
                 });
             }
         });
