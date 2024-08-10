@@ -97,21 +97,24 @@ function hideUnwantedElementsAndCollectFood() {
 
         foods.forEach(food => {
             if (food.details) {
-                // Update the details text with ranks, formatting top 3 as bold and specific properties in green
+                // Update the details text with ranks, formatting as specified
                 const detailsText = food.details.innerText || food.details.textContent;
                 food.details.innerHTML = detailsText.replace(rankRegex, (match) => {
                     const numericValue = parseInt(match, 10);
                     let rank = '';
                     let color = '';
+                    let isBold = false;
                     
                     if (numericValue === food.nuts.kcal) {
                         rank = `(${food.ranks.kcal}) `;
                     } else if (numericValue === food.nuts.szh) {
                         rank = `(${food.ranks.szh}) `;
-                        color = 'green'; // Set color for szh
+                        color = food.ranks.szh <= 3 ? 'green' : ''; // Set color for top 3
+                        isBold = true; // Bold for szh
                     } else if (numericValue === food.nuts.fh) {
                         rank = `(${food.ranks.fh}) `;
-                        color = 'green'; // Set color for fh
+                        color = food.ranks.fh <= 3 ? 'green' : ''; // Set color for top 3
+                        isBold = true; // Bold for fh
                     } else if (numericValue === food.nuts.zs) {
                         rank = `(${food.ranks.zs}) `;
                     }
