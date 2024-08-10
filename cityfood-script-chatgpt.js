@@ -33,7 +33,7 @@ function hideUnwantedElementsAndCollectFood() {
                 foodContainers.forEach((foodContainer, index) => {
                     const day = daysOfWeek[index % 7]; // Assuming the index corresponds to the day
                     const nutsDiv = foodContainer.querySelector('.food-top-details');
-                    const nuts = nutsDiv ? nutsDiv.innerText || nutsDiv.textContent : '';
+                    const nuts = nutsDiv ? (nutsDiv.innerText || nutsDiv.textContent) : '';
 
                     // Extract numeric values from nuts using regex
                     const match = nuts.match(nutrientRegex);
@@ -95,24 +95,26 @@ function hideUnwantedElementsAndCollectFood() {
         rankByProperty('zs');
 
         foods.forEach(food => {
-            // Update the details text with ranks
-            const detailsText = food.details.innerText || food.details.textContent;
-            food.details.innerHTML = detailsText.replace(rankRegex, (match) => {
-                const numericValue = parseInt(match, 10);
-                let rank = '';
-                
-                if (numericValue === food.nuts.kcal) {
-                    rank = ` (${food.ranks.kcal})`;
-                } else if (numericValue === food.nuts.szh) {
-                    rank = ` (${food.ranks.szh})`;
-                } else if (numericValue === food.nuts.fh) {
-                    rank = ` (${food.ranks.fh})`;
-                } else if (numericValue === food.nuts.zs) {
-                    rank = ` (${food.ranks.zs})`;
-                }
-                
-                return `${match}${rank}`;
-            });
+            if (food.details) {
+                // Update the details text with ranks
+                const detailsText = food.details.innerText || food.details.textContent;
+                food.details.innerHTML = detailsText.replace(rankRegex, (match) => {
+                    const numericValue = parseInt(match, 10);
+                    let rank = '';
+                    
+                    if (numericValue === food.nuts.kcal) {
+                        rank = ` (${food.ranks.kcal})`;
+                    } else if (numericValue === food.nuts.szh) {
+                        rank = ` (${food.ranks.szh})`;
+                    } else if (numericValue === food.nuts.fh) {
+                        rank = ` (${food.ranks.fh})`;
+                    } else if (numericValue === food.nuts.zs) {
+                        rank = ` (${food.ranks.zs})`;
+                    }
+                    
+                    return `${match}${rank}`;
+                });
+            }
         });
     });
 
