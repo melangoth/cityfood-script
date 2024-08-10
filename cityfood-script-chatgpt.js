@@ -58,7 +58,7 @@ function hideUnwantedElementsAndCollectFood() {
         }
     });
 
-    // Group by day and rank food items
+    // Group by day
     const groupedByDay = collectedFoods.reduce((acc, food) => {
         if (!acc[food.day]) {
             acc[food.day] = [];
@@ -67,25 +67,45 @@ function hideUnwantedElementsAndCollectFood() {
         return acc;
     }, {});
 
+    // Rank food items within each day based on each nutrient property
     Object.keys(groupedByDay).forEach(day => {
         const foods = groupedByDay[day];
-        
-        // Rank food items based on their nutrient values
-        foods.sort((a, b) => {
-            // Custom sorting function: higher values are ranked higher
-            return (b.nuts.kcal - a.nuts.kcal) ||
-                   (b.nuts.szh - a.nuts.szh) ||
-                   (b.nuts.fh - a.nuts.fh) ||
-                   (b.nuts.zs - a.nuts.zs);
+
+        // Rank foods by each nutrient property
+        const rankings = {
+            kcal: [],
+            szh: [],
+            fh: [],
+            zs: []
+        };
+
+        foods.forEach(food => {
+            rankings.kcal.push(food);
+            rankings.szh.push(food);
+            rankings.fh.push(food);
+            rankings.zs.push(food);
         });
 
-        foods.forEach((food, index) => {
-            // Rank is 1-based index
+        // Function to rank a list of foods based on a property
+        const rankByProperty = (property) => {
+            rankings[property].sort((a, b) => b.nuts[property] - a.nuts[property]);
+            rankings[property].forEach((food, index) => {
+                food.ranks[property] = index + 1;
+            });
+        };
+
+        rankByProperty('kcal');
+        rankByProperty('szh');
+        rankByProperty('fh');
+        rankByProperty('zs');
+
+        foods.forEach(food => {
+            // Make sure to include rank properties for each nutrient
             food.ranks = {
-                kcal: index + 1,
-                szh: index + 1,
-                fh: index + 1,
-                zs: index + 1
+                kcal: food.ranks.kcal || Infinity,
+                szh: food.ranks.szh || Infinity,
+                fh: food.ranks.fh || Infinity,
+                zs: food.ranks.zs || Infinity
             };
 
             // Update the details text with ranks
