@@ -125,6 +125,11 @@ function hideUnwantedElementsAndCollectFood() {
 
                     return `${styledRank}${match}`;
                 });
+
+                // Add a border to food containers with top 3 rankings in both szh and fh
+                if (food.ranks.szh && food.ranks.fh && food.ranks.szh <= 3 && food.ranks.fh <= 3) {
+                    food.element.style.border = '2px solid green';
+                }
             }
         });
     });
