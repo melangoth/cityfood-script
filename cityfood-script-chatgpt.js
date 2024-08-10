@@ -1,6 +1,7 @@
 function hideUnwantedElementsAndCollectFood() {
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const collectedFoods = [];
+    const nutrientRegex = /(\d+)\s*kcal\s*(\d+)\s*szh\s*(\d+)\s*fh\s*(\d+)\s*zs/i;
 
     // Hide all divs with the class 'banner'
     const banners = document.querySelectorAll('div.banner');
@@ -32,10 +33,20 @@ function hideUnwantedElementsAndCollectFood() {
                     const day = daysOfWeek[index % 7]; // Assuming the index corresponds to the day
                     const nutsDiv = foodContainer.querySelector('.food-top-details');
                     const nuts = nutsDiv ? nutsDiv.innerText || nutsDiv.textContent : '';
+                    
+                    // Extract numeric values from nuts using regex
+                    const match = nuts.match(nutrientRegex);
+                    const [ , kcal = '', szh = '', fh = '', zs = '' ] = match || [];
+
                     collectedFoods.push({
                         element: foodContainer,
                         day: day,
-                        nuts: nuts
+                        nuts: {
+                            kcal: parseInt(kcal, 10),
+                            szh: parseInt(szh, 10),
+                            fh: parseInt(fh, 10),
+                            zs: parseInt(zs, 10)
+                        }
                     });
                 });
             }
