@@ -99,29 +99,39 @@ function hideUnwantedElementsAndCollectFood() {
             if (food.details) {
                 // Update the details text with ranks, formatting as specified
                 const detailsText = food.details.innerText || food.details.textContent;
-                food.details.innerHTML = detailsText.replace(rankRegex, (match) => {
+                food.details.innerHTML = detailsText.replace(rankRegex, (match, offset) => {
                     const numericValue = parseInt(match, 10);
+                    const isTop3 = (property) => food.ranks[property] <= 3;
+                    const isTop5 = (property) => food.ranks[property] <= 5;
+                    const index = Array.from(detailsText.matchAll(rankRegex)).findIndex(m => m[0] === match);
+
                     let rank = '';
                     let color = '';
                     let isBold = false;
-                    
-                    if (numericValue === food.nuts.kcal) {
-                        rank = `(${food.ranks.kcal}) `;
-                    } else if (numericValue === food.nuts.szh) {
-                        rank = `(${food.ranks.szh}) `;
-                        color = food.ranks.szh <= 3 ? 'green' : ''; // Set color for top 3
-                        isBold = true; // Bold for szh
-                    } else if (numericValue === food.nuts.fh) {
-                        rank = `(${food.ranks.fh}) `;
-                        color = food.ranks.fh <= 3 ? 'green' : ''; // Set color for top 3
-                        isBold = true; // Bold for fh
-                    } else if (numericValue === food.nuts.zs) {
-                        rank = `(${food.ranks.zs}) `;
+
+                    switch (index) {
+                        case 0:
+                            rank = `(${food.ranks.kcal}) `;
+                            break;
+                        case 1:
+                            rank = `(${food.ranks.szh}) `;
+                            color = isTop3('szh') ? 'green' : '';
+                            isBold = true;
+                            break;
+                        case 2:
+                            rank = `(${food.ranks.fh}) `;
+                            color = isTop3('fh') ? 'green' : '';
+                            isBold = true;
+                            break;
+                        case 3:
+                            rank = `(${food.ranks.zs}) `;
+                            break;
+                        default:
+                            break;
                     }
-                    
-                    const rankNumber = parseInt(rank.match(/\d+/)[0], 10); // Extract rank number
-                    const formattedRank = isBold ? (rankNumber <= 3 ? `<b>${rank}</b>` : rank) : rank; // Bold only szh and fh
-                    const styledRank = color ? `<span style="color: ${color};">${formattedRank}</span>` : formattedRank; // Apply color
+
+                    const formattedRank = isBold ? `<b>${rank}</b>` : rank;
+                    const styledRank = color ? `<span style="color: ${color};">${formattedRank}</span>` : formattedRank;
 
                     return `${styledRank}${match}`;
                 });
