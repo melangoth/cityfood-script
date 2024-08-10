@@ -126,9 +126,15 @@ function hideUnwantedElementsAndCollectFood() {
                     return `${styledRank}${match}`;
                 });
 
-                // Add a border to food containers with top 3 rankings in both szh and fh
-                if (food.ranks.szh && food.ranks.fh && food.ranks.szh <= 3 && food.ranks.fh <= 3) {
-                    food.element.style.border = '2px solid green';
+                // Add a border to food containers based on the ranking criteria
+                if (food.ranks.szh && food.ranks.fh) {
+                    if (food.ranks.szh <= 3 && food.ranks.fh <= 3) {
+                        // Both szh and fh in top 3
+                        food.element.style.border = '2px solid green';
+                    } else if (food.ranks.szh <= 5 || food.ranks.fh <= 5) {
+                        // szh or fh in top 5 but not both in top 3
+                        food.element.style.border = '2px solid blue';
+                    }
                 }
             }
         });
