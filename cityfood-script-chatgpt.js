@@ -1,4 +1,7 @@
-function hideUnwantedElements() {
+function hideUnwantedElementsAndCollectFood() {
+    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    const collectedFoods = [];
+
     // Hide all divs with the class 'banner'
     const banners = document.querySelectorAll('div.banner');
     banners.forEach(banner => {
@@ -22,13 +25,32 @@ function hideUnwantedElements() {
                  !categoryText.includes('Főételek')) ||
                  categoryText.includes('kis adag')) {
                 categoryDiv.style.display = 'none';
+            } else {
+                // If the category div is not hidden, collect food containers
+                const foodContainers = categoryDiv.querySelectorAll('.food-container');
+                foodContainers.forEach((foodContainer, index) => {
+                    const day = daysOfWeek[index % 7]; // Assuming the index corresponds to the day
+                    const nutsDiv = foodContainer.querySelector('.food-top-details');
+                    const nuts = nutsDiv ? nutsDiv.innerText || nutsDiv.textContent : '';
+                    collectedFoods.push({
+                        element: foodContainer,
+                        day: day,
+                        nuts: nuts
+                    });
+                });
             }
         } else {
             // If there's no category-name div, hide the category div as well
             categoryDiv.style.display = 'none';
         }
     });
+
+    // Return the collected food objects
+    return collectedFoods;
 }
 
-// Run the function after the content is loaded
-window.addEventListener('load', hideUnwantedElements);
+// Run the function after the content is loaded and log the collected food objects
+window.addEventListener('load', () => {
+    const foodData = hideUnwantedElementsAndCollectFood();
+    console.log(foodData); // Log the array of food objects to the console
+});
