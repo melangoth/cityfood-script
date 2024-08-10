@@ -1,4 +1,10 @@
-function hideUnwantedCategories() {
+function hideUnwantedElements() {
+    // Hide all divs with the class 'banner'
+    const banners = document.querySelectorAll('div.banner');
+    banners.forEach(banner => {
+        banner.style.display = 'none';
+    });
+
     // Select all div elements with the class 'category'
     const categoryDivs = document.querySelectorAll('div.category');
 
@@ -25,4 +31,4 @@ function hideUnwantedCategories() {
 }
 
 // Run the function after the content is loaded
-window.addEventListener('load', hideUnwantedCategories);
+window.addEventListener('load', hideUnwantedElements);
