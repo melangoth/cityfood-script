@@ -46,7 +46,8 @@ function hideUnwantedElementsAndCollectFood() {
                             szh: parseInt(szh, 10),
                             fh: parseInt(fh, 10),
                             zs: parseInt(zs, 10)
-                        }
+                        },
+                        details: nutsDiv // Add the details property
                     });
                 });
             }
